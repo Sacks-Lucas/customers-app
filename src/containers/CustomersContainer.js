@@ -17,27 +17,22 @@ class CustomersContainer extends Component {
     handleAddNew = () =>{
         this.props.history.push('/customers/new')
     }
-    renderBody = customers =>{
+    renderBody = customers =>(
         <React.Fragment>
-            <CustomersList customers={customers} urlPath={'customer/'}></CustomersList>
+            <CustomersList customers={customers} urlPath={'customers/'}></CustomersList>
             <CustomersActions>
                 <button onClick={this.handleAddNew}>Nuevo Cliente</button>
             </CustomersActions>
         </React.Fragment>
-    }/*Me falla este metodo*/
+    )
 
     render() {
+        const {customers}=this.props
         return (
             <div>
                 <AppFrame header="Listado de Clientes"
                             body={
-                                // this.renderBody(customers)
-                                <React.Fragment>
-                                    <CustomersList customers={this.props.customers} urlPath={'customer/'}></CustomersList>
-                                    <CustomersActions>
-                                        <button onClick={this.handleAddNew}>Nuevo Cliente</button>
-                                    </CustomersActions>
-                                </React.Fragment>
+                                this.renderBody(customers)
                             }>
                 </AppFrame>
             </div>

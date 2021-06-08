@@ -15,7 +15,8 @@ class CustomerContainer extends Component {
     renderBody = () => (
         <Route path="/customers/:dni/edit" children={
             ({match}) => {
-                const CustomerControl= match ? CustomerEdit: CustomerData
+                console.log(match)
+                const CustomerControl= match ? CustomerEdit : CustomerData
                 return <CustomerControl {...this.props.customer}/> 
             }
         }/>
@@ -36,6 +37,6 @@ class CustomerContainer extends Component {
 const mapStateToProps = (state,props) => ({
     customer: getCustomerByDni(state,props)
 })
-const mapDispatchToProps= () => null
+const mapDispatchToProps= () => ({})
 
 export default connect(mapStateToProps,mapDispatchToProps)(CustomerContainer) 
