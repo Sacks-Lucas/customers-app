@@ -2,25 +2,34 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getCustomerByDni } from '../selectors/customers'
-import { Route } from 'react-router'
+import { Route, withRouter } from 'react-router'
 import AppFrame from '../components/AppFrame'
 import CustomerEdit from '../components/CustomerEdit'
 import CustomerData from '../components/CustomerData'
 
 class CustomerContainer extends Component {
+    
     static propTypes = {
         dni:PropTypes.string.isRequired,
         customer:PropTypes.object.isRequired,
     }
+    handleOnBack = () =>(
+        this.props.history.goBack()
+    )
+    handleSubmit = values =>(
+        console.log(JSON.stringify(values))
+    )
+
     renderBody = () => (
         <Route path="/customers/:dni/edit" children={
             ({match}) => {
                 console.log(match)
                 const CustomerControl= match ? CustomerEdit : CustomerData
-                return <CustomerControl {...this.props.customer}/> 
+                return <CustomerControl {...this.props.customer} onSubmit={this.handleSubmit} onBack={this.handleOnBack}/> 
             }
         }/>
     )
+
     render() {
         return (
             <div>
@@ -39,4 +48,5 @@ const mapStateToProps = (state,props) => ({
 })
 const mapDispatchToProps= () => ({})
 
-export default connect(mapStateToProps,mapDispatchToProps)(CustomerContainer) 
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CustomerContainer))
+// export default connect(mapStateToProps,mapDispatchToProps)(CustomerContainer) 
