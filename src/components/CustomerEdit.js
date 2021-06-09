@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
 import { setPropsAsInitial } from '../helpers/setPropsAsInitial'
 import CustomersActions from './CustomersActions'
+import { Prompt } from 'react-router'
 
 const isNumber = value =>(
     isNaN(Number(value))&& "El campo debe ser un numero"
@@ -34,7 +35,7 @@ const toUpper = value => value && value.toUpperCase()
 const toLower = value => value && value.toLowerCase()
 const onlyGrow = (value,previousValue,values) => value && previousValue && (value > previousValue ? value : previousValue)
 
-const CustomerEdit = ({name,age,dni,handleSubmit,submitting,onBack}) => {
+const CustomerEdit = ({name,age,dni,handleSubmit,submitting,onBack, pristine,submitSucceeded}) => {
     return (
         <div>
             <h2>Edicion del Cliente</h2>
@@ -43,9 +44,10 @@ const CustomerEdit = ({name,age,dni,handleSubmit,submitting,onBack}) => {
                 <Field name="dni" component={MyField} type="text" label="DNI:"></Field>
                 <Field name="age" component={MyField} type="number" validate={isNumber} label="Edad:" parse={toNumber} normalize={onlyGrow}></Field>
                 <CustomersActions>
-                    <button type="submit" disabled={submitting}>Aceptar</button>
-                    <button onClick={onBack}>Cancelar</button>
+                    <button type="submit" disabled={pristine || submitting}>Aceptar</button>
+                    <button type="button" disabled={submitting} onClick={onBack}>Cancelar</button>
                 </CustomersActions>
+                <Prompt when={!pristine && !submitSucceeded} message="Se perderan los datos si continua"></Prompt>
             </form>
         </div>
     )
