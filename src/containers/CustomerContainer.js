@@ -30,15 +30,19 @@ class CustomerContainer extends Component {
     handleSubmit = values =>{
         console.log(JSON.stringify(values))
         const {id}=values
-        this.props.updateCustomer(id,values)
+        return this.props.updateCustomer(id,values)
     }
+
+    handleOnSubmitSuccess = () =>(
+        this.props.history.goBack()
+    )
 
     renderBody = () => (
         <Route path="/customers/:dni/edit" children={
             ({match}) => {
                 if(this.props.customer){
                     const CustomerControl= match ? CustomerEdit : CustomerData
-                    return <CustomerControl {...this.props.customer} onSubmit={this.handleSubmit} onBack={this.handleOnBack}/> 
+                    return <CustomerControl {...this.props.customer} onSubmit={this.handleSubmit} onSubmitSuccess={this.handleOnSubmitSuccess} onBack={this.handleOnBack}/> 
                 }
                 return null;
             }
