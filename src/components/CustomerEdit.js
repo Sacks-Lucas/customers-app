@@ -3,22 +3,37 @@ import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
 import { setPropsAsInitial } from '../helpers/setPropsAsInitial'
 
+const isRequired = value =>(
+    !value && "Este campo es requerido"
+)
+
+const isNumber = value =>(
+    isNaN(Number(value))&& "El campo debe ser un numero"
+)
+
+const MyField = ({input,meta, type,label,name}) => (
+    <div>
+        <label htmlFor={name}>{label} </label>
+        <input {...input} type={!type ?"text" : type}/>
+        {
+            meta.touched && meta.error && <span>{meta.error}</span>
+        }
+    </div>
+)
+
 const CustomerEdit = ({name,age,dni}) => {
     return (
         <div>
             <h2>Edicion del Cliente</h2>
             <form action="">
                 <div>
-                    <label htmlFor="name">Nombre: </label>
-                    <Field name="name" component="input" type="text"></Field>
+                    <Field name="name" component={MyField} type="text" validate={isRequired} label="Nombre:"></Field>
                 </div>
                 <div>
-                    <label htmlFor="dni">DNI: </label>
-                    <Field name="dni" component="input" type="text"></Field>
+                    <Field name="dni" component={MyField} type="text" validate={[isRequired,isNumber]} label="DNI:"></Field>
                 </div>
                 <div>
-                    <label htmlFor="age">Edad: </label>
-                    <Field name="age" component="input" type="number"></Field>
+                    <Field name="age" component={MyField} type="number" validate={isNumber} label="Edad:"></Field>
                 </div>
             </form>
         </div>
