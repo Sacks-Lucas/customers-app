@@ -56,7 +56,7 @@ class NewCustomerContainer extends Component {
 const mapStateToProps = () =>({})
 
 const mapDispatchToProps = dispatch => ({
-    insertCustomer: () => dispatch(insertCustomer())
+    insertCustomer: (values) => dispatch(insertCustomer(values))
 })
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(NewCustomerContainer))

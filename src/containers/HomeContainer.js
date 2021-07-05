@@ -10,7 +10,7 @@ class HomeContainer extends Component {
     render() {
         return (
             <div>
-                <AppFrame header='Home'
+                <AppFrame header='Inicio'
                 body={
                     <div>
                         Esta es la pantalla Inicial
